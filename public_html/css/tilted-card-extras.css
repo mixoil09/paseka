@@ -1,0 +1,85 @@
+/* Сетка для карточек */
+.tilted-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    padding: 20px 0;
+}
+
+/* Слой поверх изображения (название + цена + кнопка) */
+.honey-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.3) 40%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    color: #fff;
+}
+
+.honey-card-overlay h3 {
+    font-size: 1.1rem;
+    margin: 0 0 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.honey-card-overlay .price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0 0 10px;
+    color: #ffd700;
+}
+
+.honey-card-overlay .btn {
+    align-self: flex-start;
+    padding: 8px 18px;
+    background: #f5b700;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Задняя сторона — описание товара */
+.honey-card-back {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 25px;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2119, #4a3520);
+    color: #fff;
+    text-align: center;
+}
+
+.honey-card-back h3 {
+    margin-bottom: 12px;
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.honey-card-back p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.honey-card-back .weight {
+    color: #ffd700;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.honey-card-back .hint {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    font-style: italic;
+}
