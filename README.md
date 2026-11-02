@@ -10,22 +10,42 @@
 ## Структура
 
 paseka/
-├── app/ # серверная логика (недоступна из браузера)
-│ ├── config.php # подключение к БД
-│ ├── .env # переменные окружения (НЕ в гит)
-│ ├── includes/ # шапка, подвал
-│ ├── api/ # обработчики API
-│ └── sql/schema.sql # схема БД + начальные данные
-│
-└── public_html/ # корень сайта (доступен из браузера)
-├── index.php
-├── catalog.php
-├── cart.php
-├── about.php
-├── api/ # тонкие прослойки → app/api/
-├── css/
-├── js/
-└── img/
+├── .gitignore
+├── README.md
+├── app/                     # Серверная часть (вне public_html)
+│   ├── .env.example
+│   ├── config.php
+│   ├── api/
+│   │   ├── admin_orders.php
+│   │   ├── order_handler.php
+│   │   └── products_handler.php
+│   ├── includes/
+│   │   ├── footer.php
+│   │   └── header.php
+│   └── sql/
+│       └── schema.sql
+└── public_html/             # Корень сайта (фронтенд)
+    ├── .htaccess
+    ├── index.php
+    ├── catalog.php
+    ├── product.php
+    ├── cart.php
+    ├── about.php
+    ├── login.php
+    ├── profile.php
+    ├── admin.html
+    ├── api/                 # Прослойки к серверной части
+    │   ├── products.php
+    │   ├── order.php
+    │   └── admin_orders.php
+    ├── css/
+    │   ├── style.css
+    │   └── hive.css
+    ├── js/
+    │   ├── main.js
+    │   ├── hive.js
+    │   └── auth.js
+    └── img/                 # (Сюда положишь свои картинки и видео)
 
 ## Локальный запуск
 
