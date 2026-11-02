@@ -1,4 +1,1 @@
-<?php
-declare(strict_types=1);
-
-require __DIR__ . '/../../app/api/order_handler.php';
+<?php declare(strict_types=1); require __DIR__ . '/../../app/api/order_handler.php';
