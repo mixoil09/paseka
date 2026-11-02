@@ -1,41 +1,38 @@
 <?php
 declare(strict_types=1);
-
 require __DIR__ . '/../app/config.php';
-
-$stmt = $pdo->query(
-    "SELECT id, name, description, price, weight, image
-     FROM products
-     WHERE in_stock = 1
-     ORDER BY id
-     LIMIT 6"
-);
-$products = $stmt->fetchAll();
-
-$pageTitle = 'Главная — Пасека';
+$categories = $pdo->query("SELECT id, name FROM categories ORDER BY id")->fetchAll();
+$pageTitle = 'Пасека — натуральный мёд';
 include __DIR__ . '/../app/includes/header.php';
 ?>
 
-<section class="hero">
-    <h1>Натуральный мёд с нашей пасеки</h1>
-    <p>Мёд, свечи, прополис — всё своё, всё натуральное.</p>
-    <a href="/catalog.php" class="btn">Смотреть каталог</a>
+<section class="hive-hero" id="hive-hero">
+    <div class="hive-video" id="hive-video">
+        <video id="hive-video-el" class="hive-video__el" autoplay muted playsinline poster="/img/hive-outside.jpg">
+            <source src="/img/hive-intro.mp4" type="video/mp4">
+        </video>
+        <div class="hive-video__vignette"></div>
+        <button class="hive-skip" id="hive-skip" type="button">Пропустить →</button>
+        <label class="hive-video__dontshow">
+            <input type="checkbox" id="hive-dontshow" checked> <span>Больше не показывать</span>
+        </label>
+    </div>
+
+    <div class="hive-scene" id="hive-inside">
+        <div class="hive-scene__bg" style="background-image: url('/img/hive-inside.jpg');"></div>
+        <div class="hive-scene__vignette"></div>
+        <div class="hive-content">
+            <h1 class="hive-title">Что ищем в улье?</h1>
+            <p class="hive-subtitle">Выберите категорию — и пчела покажет дорогу</p>
+            <div class="honeycomb-menu">
+                <a href="/catalog.php" class="hex"><span class="face">Все</span></a>
+                <?php foreach ($categories as $cat): ?>
+                    <a href="/catalog.php?category=<?= (int)$cat['id'] ?>" class="hex">
+                        <span class="face"><?= htmlspecialchars($cat['name']) ?></span>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
 </section>
-
-<h2>Популярное</h2>
-<div class="products-grid">
-    <?php foreach ($products as $p): ?>
-        <article class="product-card">
-            <img src="/img/<?= htmlspecialchars((string)($p['image'] ?: 'placeholder.jpg'), ENT_QUOTES, 'UTF-8') ?>"
-                 alt="<?= htmlspecialchars((string)$p['name'], ENT_QUOTES, 'UTF-8') ?>">
-            <h3><?= htmlspecialchars((string)$p['name'], ENT_QUOTES, 'UTF-8') ?></h3>
-            <p class="desc"><?= htmlspecialchars((string)$p['description'], ENT_QUOTES, 'UTF-8') ?></p>
-            <p class="price"><?= number_format((float)$p['price'], 0, '.', ' ') ?> ₽</p>
-            <button class="btn" onclick='addToCart(<?= (int)$p['id'] ?>, <?= json_encode($p['name'], JSON_UNESCAPED_UNICODE) ?>, <?= (float)$p['price'] ?>)'>
-                В корзину
-            </button>
-        </article>
-    <?php endforeach; ?>
-</div>
-
 <?php include __DIR__ . '/../app/includes/footer.php'; ?>
