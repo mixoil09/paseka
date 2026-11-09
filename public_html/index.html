@@ -1,38 +1,99 @@
-<?php
-declare(strict_types=1);
-require __DIR__ . '/../app/config.php';
-$categories = $pdo->query("SELECT id, name FROM categories ORDER BY id")->fetchAll();
-$pageTitle = 'Пасека — натуральный мёд';
-include __DIR__ . '/../app/includes/header.php';
-?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пасека — натуральный мёд</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Относительные пути к стилям -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hive.css">
+</head>
+<body class="hive-theme">
 
-<section class="hive-hero" id="hive-hero">
-    <div class="hive-video" id="hive-video">
-        <video id="hive-video-el" class="hive-video__el" autoplay muted playsinline poster="/img/hive-outside.jpg">
-            <source src="/img/hive-intro.mp4" type="video/mp4">
-        </video>
-        <div class="hive-video__vignette"></div>
-        <button class="hive-skip" id="hive-skip" type="button">Пропустить →</button>
-        <label class="hive-video__dontshow">
-            <input type="checkbox" id="hive-dontshow" checked> <span>Больше не показывать</span>
-        </label>
-    </div>
+<header class="site-header">
+    <a href="index.html" class="logo">🐝 Пасека</a>
+    <nav class="site-nav">
+        <a href="index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="about.html">О пасеке</a>
+        <a href="cart.html">Корзина<span id="cart-count">0</span></a>
+        <span id="auth-nav" style="display:inline-flex; gap:4px; align-items:center;"></span>
+    </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const authNav = document.getElementById('auth-nav');
+        if (!authNav) return;
+        const user = JSON.parse(localStorage.getItem('current_user') || 'null');
+        if (user) {
+            if (user.role === 'admin') {
+                authNav.innerHTML = `<a href="admin.html" style="color: var(--primary); font-weight: bold;">⚙️ Админ-панель</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
+            } else {
+                authNav.innerHTML = `<a href="profile.html" style="color: var(--primary);">👤 ${user.name}</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
+            }
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault(); localStorage.removeItem('current_user'); window.location.href = 'index.html';
+            });
+        } else {
+            authNav.innerHTML = `<a href="login.html">Вход</a>`;
+        }
+    });
+    </script>
+</header>
 
-    <div class="hive-scene" id="hive-inside">
-        <div class="hive-scene__bg" style="background-image: url('/img/hive-inside.jpg');"></div>
-        <div class="hive-scene__vignette"></div>
-        <div class="hive-content">
-            <h1 class="hive-title">Что ищем в улье?</h1>
-            <p class="hive-subtitle">Выберите категорию — и пчела покажет дорогу</p>
-            <div class="honeycomb-menu">
-                <a href="/catalog.php" class="hex"><span class="face">Все</span></a>
-                <?php foreach ($categories as $cat): ?>
-                    <a href="/catalog.php?category=<?= (int)$cat['id'] ?>" class="hex">
-                        <span class="face"><?= htmlspecialchars($cat['name']) ?></span>
+<main class="container" style="padding: 0; max-width: none;">
+    <section class="hive-hero" id="hive-hero">
+        
+        <!-- ВИДЕО-ИНТРО -->
+        <div class="hive-video" id="hive-video">
+            <video id="hive-video-el" class="hive-video__el" autoplay muted playsinline poster="img/hive-outside.jpg">
+                <source src="img/hive-intro.mp4" type="video/mp4">
+            </video>
+            <div class="hive-video__vignette"></div>
+            <button class="hive-skip" id="hive-skip" type="button">Пропустить →</button>
+            <label class="hive-video__dontshow">
+                <input type="checkbox" id="hive-dontshow" checked> 
+                <span>Больше не показывать</span>
+            </label>
+        </div>
+
+        <!-- ФОН С СОТАМИ -->
+        <div class="hive-scene" id="hive-inside">
+            <div class="hive-scene__bg" style="background-image: url('img/hive-inside.jpg');"></div>
+            <div class="hive-scene__vignette"></div>
+            
+            <div class="hive-content">
+                <h1 class="hive-title">Что ищем в улье?</h1>
+                <p class="hive-subtitle">Выберите категорию — и пчела покажет дорогу</p>
+                
+                <!-- Меню-соты (статичное, без PHP) -->
+                <div class="honeycomb-menu">
+                    <a href="catalog.html" class="hex">
+                        <span class="face">Все</span>
                     </a>
-                <?php endforeach; ?>
+                    <a href="catalog.html?category=1" class="hex">
+                        <span class="face">Мёд</span>
+                    </a>
+                    <a href="catalog.html?category=2" class="hex">
+                        <span class="face">Свечи и воск</span>
+                    </a>
+                    <a href="catalog.html?category=3" class="hex">
+                        <span class="face">Подарочные наборы</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<?php include __DIR__ . '/../app/includes/footer.php'; ?>
+    </section>
+</main>
+
+<footer class="site-footer">
+    © 2026 Пасека. Все права защищены.
+</footer>
+
+<!-- Подключаем скрипты -->
+<script src="js/main.js"></script>
+<script src="js/hive.js"></script>
+</body>
+</html>
