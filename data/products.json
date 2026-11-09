@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Мёд липовый", "description": "Натуральный липовый мёд с нашей пасеки.", "price": 550, "weight": "0.5 кг", "image": "honey-lipa.jpg", "category_id": 1 },
+  { "id": 2, "name": "Мёд гречишный", "description": "Тёмный гречишный мёд, насыщенный вкус.", "price": 600, "weight": "0.5 кг", "image": "honey-grechka.jpg", "category_id": 1 },
+  { "id": 3, "name": "Свеча восковая", "description": "Свеча из натурального воска.", "price": 300, "weight": "1 шт", "image": "candle.jpg", "category_id": 2 },
+  { "id": 4, "name": "Подарочный набор", "description": "Мёд + свеча + соты.", "price": 1200, "weight": "1.5 кг", "image": "gift.jpg", "category_id": 3 },
+  { "id": 5, "name": "Мёд разнотравье", "description": "Ароматный мёд с луговых цветов.", "price": 480, "weight": "0.5 кг", "image": "honey-grechka.jpg", "category_id": 1 },
+  { "id": 6, "name": "Набор свечей", "description": "Три восковые свечи.", "price": 650, "weight": "3 шт", "image": "candle.jpg", "category_id": 2 },
+  { "id": 7, "name": "Пыльца", "description": "Пчелиная обножка, собранная вручную.", "price": 400, "weight": "100 г", "image": "gift.jpg", "category_id": 1 }
+]
