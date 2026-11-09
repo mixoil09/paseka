@@ -1,4 +1,45 @@
-<?php $pageTitle = 'Вход — Пасека'; include __DIR__ . '/../app/includes/header.php'; ?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — Пасека</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Относительный путь к CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="hive-theme">
+<header class="site-header">
+    <a href="index.html" class="logo">🐝 Пасека</a>
+    <nav class="site-nav">
+        <a href="index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="about.html">О пасеке</a>
+        <a href="cart.html">Корзина<span id="cart-count">0</span></a>
+        <span id="auth-nav" style="display:inline-flex; gap:4px; align-items:center;"></span>
+    </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const authNav = document.getElementById('auth-nav');
+        if (!authNav) return;
+        const user = JSON.parse(localStorage.getItem('current_user') || 'null');
+        if (user) {
+            if (user.role === 'admin') {
+                authNav.innerHTML = `<a href="admin.html" style="color: var(--primary); font-weight: bold;">⚙️ Админ-панель</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
+            } else {
+                authNav.innerHTML = `<a href="profile.html" style="color: var(--primary);">👤 ${user.name}</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
+            }
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault(); localStorage.removeItem('current_user'); window.location.href = 'index.html';
+            });
+        } else {
+            authNav.innerHTML = `<a href="login.html">Вход</a>`;
+        }
+    });
+    </script>
+</header>
 <section class="section" style="max-width: 400px; margin: 60px auto;">
     <h1 style="text-align:center; margin-bottom: 30px;">Вход / Регистрация</h1>
     <p id="auth-msg" style="text-align:center; margin-bottom: 20px; font-weight: bold;"></p>
@@ -33,4 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-<?php include __DIR__ . '/../app/includes/footer.php'; ?>
+<footer class="site-footer">
+    © 2026 Пасека. Все права защищены.
+</footer>
+
+<!-- Относительные пути к скриптам -->
+<script src="js/main.js"></script>
+<!-- Скрипт hive.js здесь не нужен, так как видео-интро есть только на главной -->
+</body>
+</html>
