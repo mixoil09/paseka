@@ -1,27 +1,91 @@
-<?php
-$pageTitle = 'Корзина — Пасека';
-include __DIR__ . '/../app/includes/header.php';
-?>
-<section class="cart-page">
-    <h1>Корзина</h1>
-    <div id="cart-empty" class="hidden">
-        <p>Корзина пуста. <a href="/catalog.php" style="color: var(--primary-hover); font-weight: 600;">Перейти в каталог →</a></p>
-    </div>
-    <div id="cart-content" class="hidden">
-        <table class="cart-table">
-            <thead><tr><th>Товар</th><th>Цена</th><th>Количество</th><th>Сумма</th><th></th></tr></thead>
-            <tbody id="cart-items"></tbody>
-            <tfoot><tr><td colspan="3" class="right"><strong>Итого:</strong></td><td colspan="2"><strong id="cart-total">0 ₽</strong></td></tr></tfoot>
-        </table>
-        <h2 style="margin: 32px 0 20px;">Оформление заказа</h2>
-        <form id="order-form" class="order-form">
-            <label>Имя *<input type="text" name="name" required maxlength="100"></label>
-            <label>Телефон *<input type="tel" name="phone" required maxlength="20" placeholder="+7 (999) 123-45-67" pattern="[\d\s\+\-\(\)]{10,20}" title="Введите корректный номер"></label>
-            <label>Адрес доставки *<textarea name="address" required rows="3" maxlength="500"></textarea></label>
-            <label>Комментарий<textarea name="comment" rows="2" maxlength="500"></textarea></label>
-            <button type="submit">Оформить заказ</button>
-            <p id="order-message"></p>
-        </form>
-    </div>
-</section>
-<?php include __DIR__ . '/../app/includes/footer.php'; ?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина — Пасека</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Относительный путь к CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="hive-theme">
+<header class="site-header">
+    <a href="index.html" class="logo">🐝 Пасека</a>
+    <nav class="site-nav">
+        <a href="index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="about.html">О пасеке</a>
+        <a href="cart.html">Корзина<span id="cart-count">0</span></a>
+        <span id="auth-nav" style="display:inline-flex; gap:4px; align-items:center;"></span>
+    </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const authNav = document.getElementById('auth-nav');
+        if (!authNav) return;
+        const user = JSON.parse(localStorage.getItem('current_user') || 'null');
+        if (user) {
+            if (user.role === 'admin') {
+                authNav.innerHTML = `<a href="admin.html" style="color: var(--primary); font-weight: bold;">⚙️ Админ-панель</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
+            } else {
+                authNav.innerHTML = `<a href="profile.html" style="color: var(--primary);">👤 ${user.name}</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
+            }
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault(); localStorage.removeItem('current_user'); window.location.href = 'index.html';
+            });
+        } else {
+            authNav.innerHTML = `<a href="login.html">Вход</a>`;
+        }
+    });
+    </script>
+</header>
+
+<main class="container">
+    <section class="cart-page">
+        <h1>Корзина</h1>
+        <div id="cart-empty" class="hidden">
+            <p>Корзина пуста. <a href="catalog.html" style="color: var(--primary-hover); font-weight: 600;">Перейти в каталог →</a></p>
+        </div>
+        <div id="cart-content" class="hidden">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Товар</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Сумма</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="right"><strong>Итого:</strong></td>
+                        <td colspan="2"><strong id="cart-total">0 ₽</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <h2 style="margin: 32px 0 20px;">Оформление заказа</h2>
+            <form id="order-form" class="order-form">
+                <label>Имя *<input type="text" name="name" required maxlength="100"></label>
+                <label>Телефон *<input type="tel" name="phone" required maxlength="20" placeholder="+7 (999) 123-45-67" pattern="[\d\s\+\-\(\)]{10,20}" title="Введите корректный номер"></label>
+                <label>Адрес доставки *<textarea name="address" required rows="3" maxlength="500"></textarea></label>
+                <label>Комментарий<textarea name="comment" rows="2" maxlength="500"></textarea></label>
+                <button type="submit">Оформить заказ</button>
+                <p id="order-message"></p>
+            </form>
+        </div>
+    </section>
+</main> <!-- Закрывающий тег main -->
+
+<footer class="site-footer">
+    © 2026 Пасека. Все права защищены.
+</footer>
+
+<!-- Относительные пути к скриптам -->
+<script src="js/main.js"></script>
+<!-- Скрипт hive.js здесь не нужен, так как видео-интро есть только на главной -->
+</body>
+</html>
