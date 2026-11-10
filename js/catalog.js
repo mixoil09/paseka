@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category');
 
+    // Подсветка активной кнопки
     document.querySelectorAll('.categories a').forEach(link => {
         link.classList.remove('active');
         if (categoryId && link.getAttribute('href').includes(`category=${categoryId}`)) {
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let i = 0;
             let rowIndex = 0;
 
-            // Разбиваем на ряды: четные (0, 2) — по 4 шт, нечетные (1, 3) — по 3 шт
+            // ГРУППИРУЕМ В РЯДЫ: 4 элемента, затем 3, затем 4...
             while (i < filtered.length) {
                 let count = (rowIndex % 2 === 0) ? 4 : 3;
                 let rowItems = filtered.slice(i, i + count);
