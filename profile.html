@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль — Пасека</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <!-- Относительный путь к CSS -->
+    <title>Личный кабинет — Пасека</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="hive-theme">
@@ -18,63 +14,60 @@
         <a href="catalog.html">Каталог</a>
         <a href="about.html">О пасеке</a>
         <a href="cart.html">Корзина<span id="cart-count">0</span></a>
-        <span id="auth-nav" style="display:inline-flex; gap:4px; align-items:center;"></span>
     </nav>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const authNav = document.getElementById('auth-nav');
-        if (!authNav) return;
-        const user = JSON.parse(localStorage.getItem('current_user') || 'null');
-        if (user) {
-            if (user.role === 'admin') {
-                authNav.innerHTML = `<a href="admin.html" style="color: var(--primary); font-weight: bold;">⚙️ Админ-панель</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
-            } else {
-                authNav.innerHTML = `<a href="profile.html" style="color: var(--primary);">👤 ${user.name}</a><a href="#" id="logout-btn" style="color: #ff6b6b;">Выход</a>`;
-            }
-            document.getElementById('logout-btn').addEventListener('click', (e) => {
-                e.preventDefault(); localStorage.removeItem('current_user'); window.location.href = 'index.html';
-            });
-        } else {
-            authNav.innerHTML = `<a href="login.html">Вход</a>`;
-        }
-    });
-    </script>
 </header>
 
-<section class="section" style="max-width: 800px; margin: 0 auto;">
-    <h1>Личный кабинет</h1>
-    <div id="profile-content"><p>Загрузка...</p></div>
-</section>
-<script src="/js/auth.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    const user = auth.getCurrentUser();
-    if (!user) { window.location.href = '/login.php'; return; }
-    const content = document.getElementById('profile-content');
-    const myOrderIds = JSON.parse(localStorage.getItem('my_orders') || '[]');
-    let ordersHtml = '<p style="color:var(--text-muted)">Вы пока не сделали ни одного заказа.</p>';
-    
-    if (myOrderIds.length > 0) {
-        try {
-            const res = await fetch('/api/admin_orders.php');
-            const allOrders = await res.json();
-            const myOrders = allOrders.filter(o => myOrderIds.includes(o.id));
-            if (myOrders.length > 0) {
-                ordersHtml = `<table class="cart-table" style="margin-top: 20px;"><thead><tr><th>№</th><th>Дата</th><th>Сумма</th><th>Статус</th></tr></thead><tbody>
-                ${myOrders.map(o => `<tr><td>#${o.id}</td><td>${new Date(o.created_at).toLocaleDateString('ru-RU')}</td><td>${o.total} ₽</td><td><span style="color: ${o.status === 'approved' ? '#4ade80' : (o.status === 'rejected' ? '#ff6b6b' : '#f5b700')}">${o.status === 'approved' ? 'Одобрен' : (o.status === 'rejected' ? 'Отклонен' : 'В обработке')}</span></td></tr>`).join('')}
-                </tbody></table>`;
-            }
-        } catch (e) {}
-    }
-    content.innerHTML = `<p style="font-size:1.2rem; margin-bottom:20px;">Привет, <strong style="color:var(--primary)">${user.name}</strong>!</p><h2 style="margin-bottom:20px;">Мои заказы</h2>${ordersHtml}`;
-});
-</script>
+<main class="container">
+    <section class="section" style="max-width: 800px; margin: 0 auto;">
+        <h1>Личный кабинет</h1>
+        <div id="profile-content"><p>Загрузка...</p></div>
+    </section>
+</main>
+
 <footer class="site-footer">
     © 2026 Пасека. Все права защищены.
 </footer>
 
-<!-- Относительные пути к скриптам -->
-<script src="js/main.js"></script>
-<!-- Скрипт hive.js здесь не нужен, так как видео-интро есть только на главной -->
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Проверяем, авторизован ли пользователь
+    const user = auth.getCurrentUser();
+    
+    // Если НЕТ — перекидываем на страницу ВХОДА
+    if (!user) { 
+        window.location.href = 'login.html'; 
+        return; 
+    }
+
+    const content = document.getElementById('profile-content');
+    
+    // Получаем заказы из localStorage
+    const myOrderIds = JSON.parse(localStorage.getItem('my_orders') || '[]');
+    const allOrders = JSON.parse(localStorage.getItem('paseka_orders') || '[]');
+    
+    let ordersHtml = '<p style="color:var(--text-muted)">Вы пока не сделали ни одного заказа.</p>';
+    
+    if (myOrderIds.length > 0) {
+        const myOrders = allOrders.filter(o => myOrderIds.includes(o.id));
+        if (myOrders.length > 0) {
+            ordersHtml = `<table class="cart-table" style="margin-top: 20px;"><thead><tr><th>№</th><th>Дата</th><th>Сумма</th><th>Статус</th></tr></thead><tbody>
+            ${myOrders.map(o => {
+                let sColor = o.status === 'approved' ? '#4ade80' : (o.status === 'rejected' ? '#ff6b6b' : '#f5b700');
+                let sText = o.status === 'approved' ? 'Одобрен' : (o.status === 'rejected' ? 'Отклонен' : 'В обработке');
+                return `<tr><td>#${o.id}</td><td>${new Date(o.created_at).toLocaleDateString('ru-RU')}</td><td>${o.total} ₽</td><td><span style="color: ${sColor}">${sText}</span></td></tr>`;
+            }).join('')}
+            </tbody></table>`;
+        }
+    }
+
+    // Выводим данные пользователя и заказы
+    content.innerHTML = `
+        <p style="font-size:1.2rem; margin-bottom:20px;">Привет, <strong style="color:var(--primary)">${user.name}</strong>!</p>
+        <h2 style="margin-bottom:20px;">Мои заказы</h2>
+        ${ordersHtml}
+    `;
+});
+</script>
 </body>
 </html>
