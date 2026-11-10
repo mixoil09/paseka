@@ -153,9 +153,9 @@ h1, h2, h3, h4 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 940px; /* Ширина под 3 колонки */
+    max-width: 940px; /* Ширина ровно под 3 колонки */
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 60px 0;
 }
 
 .comb-item {
@@ -163,13 +163,14 @@ h1, h2, h3, h4 {
     position: relative;
     width: 280px;
     height: 323px;
-    margin: 8px; 
+    margin: 10px; 
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    transition: transform 0.3s, filter 0.3s;
     background: var(--surface-2); 
     z-index: 1;
-    border: 3px solid var(--bg); 
+    border: 4px solid var(--bg); /* Темная окантовка */
 }
+
+
 
 .comb-item:hover {
     transform: scale(1.05);
@@ -197,15 +198,21 @@ h1, h2, h3, h4 {
         margin-bottom: 169px;
     }
 }
-/* Планшеты (2 колонки) */
-@media (max-width: 899px) {
-    .honeycomb-grid { max-width: 620px; padding: 20px 0; }
-    .comb-item:nth-child(2n) { transform: translateY(50%); margin-bottom: 169px; }
+/* МАГИЯ: Сдвигаем центральную соту вниз */
+@media (min-width: 900px) {
+    .comb-item:nth-child(3n+2) {
+        margin-top: 170px;
+        margin-bottom: -150px; 
+    }
 }
-/* Телефоны (1 колонка) */
-@media (max-width: 599px) {
-    .honeycomb-grid { max-width: 100%; gap: 10px; }
-    .comb-item { width: 200px; height: 231px; transform: none !important; margin-bottom: 0 !important; }
+
+/* Мобилки (без сдвигов) */
+@media (max-width: 899px) {
+    .honeycomb-grid { max-width: 620px; }
+    .comb-item:nth-child(3n+2) {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 }
 
 /* ============================================
