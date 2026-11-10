@@ -151,17 +151,12 @@ h1, h2, h3, h4 {
 /* ============================================
    СЕТКА-СОТЫ (КАТАЛОГ)
    ============================================ */
-/* ============================================
-   СЕТКА-СОТЫ (КАТАЛОГ) НА CSS GRID
-   ============================================ */
 .honeycomb-grid {
-    display: grid;
-    /* Жестко задаем 3 колонки по 280px */
-    grid-template-columns: repeat(3, 280px);
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    /* Отступы: 10px по вертикали, 15px по горизонтали */
-    gap: 10px 15px; 
-    max-width: 900px;
+    /* Ширина под 3 колонки (280px * 3 + отступы) */
+    max-width: 920px; 
     margin: 0 auto;
     padding: 60px 0;
 }
@@ -171,6 +166,7 @@ h1, h2, h3, h4 {
     position: relative;
     width: 280px;
     height: 323px;
+    margin: 8px; /* Зазор между сотами */
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: var(--surface-2); 
     z-index: 1;
@@ -189,6 +185,7 @@ h1, h2, h3, h4 {
     height: 100%; 
     position: relative; 
     overflow: hidden; 
+    display: block;
 }
 
 .comb-item__inner img { 
@@ -203,14 +200,14 @@ h1, h2, h3, h4 {
     transform: scale(1.1); 
 }
 
-/* Текст (градиент снизу, чтобы не закрывать картинку полностью) */
+/* Текст (градиент по центру) */
 .comb-item__info {
     position: absolute; 
     inset: 0;
     background: linear-gradient(to top, rgba(13, 8, 5, 0.95) 0%, rgba(13, 8, 5, 0.4) 50%, transparent 100%);
     display: flex; 
     flex-direction: column; 
-    justify-content: center; /* Текст по центру */
+    justify-content: center; 
     align-items: center;
     padding: 20px; 
     text-align: center;
@@ -234,35 +231,25 @@ h1, h2, h3, h4 {
 
 /* --- МАГИЯ ШАХМАТНОГО ПОРЯДКА (ПК) --- */
 @media (min-width: 900px) {
-    /* Даем место для нижнего сдвинутого ряда */
-    .honeycomb-grid {
-        padding-bottom: 200px; 
-    }
-
-    /* Сдвигаем вниз КАЖДУЮ ВТОРУЮ соту (2-ю, 5-ю, 8-ю) */
+    /* Сдвигаем вниз КАЖДУЮ ВТОРУЮ соту (центральную колонку) */
     .comb-item:nth-child(3n+2) {
-        /* Сдвиг ровно на половину высоты (323 / 2 = 161.5) */
         transform: translateY(50%);
+        margin-bottom: 169px; /* Подтягиваем следующий ряд, чтобы соты сцепились */
     }
 }
 
-/* --- ПЛАНШЕТЫ (2 колонки) --- */
+/* --- МОБИЛКИ И ПЛАНШЕТЫ (БЕЗ СДВИГОВ) --- */
 @media (max-width: 899px) {
     .honeycomb-grid { 
-        grid-template-columns: repeat(2, 280px);
-        padding-bottom: 20px;
+        max-width: 620px; 
     }
-    /* На планшетах отключаем сдвиг, чтобы не было дыр */
     .comb-item:nth-child(3n+2) {
         transform: none;
+        margin-bottom: 8px;
     }
 }
 
-/* --- ТЕЛЕФОНЫ (1 колонка) --- */
 @media (max-width: 599px) {
-    .honeycomb-grid { 
-        grid-template-columns: 220px; 
-    }
     .comb-item { 
         width: 220px; 
         height: 254px; 
