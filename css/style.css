@@ -155,7 +155,7 @@ h1, h2, h3, h4 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* Ширина под 3 колонки (280px * 3 + отступы) */
+    /* Ширина ровно под 3 колонки */
     max-width: 920px; 
     margin: 0 auto;
     padding: 60px 0;
@@ -166,7 +166,7 @@ h1, h2, h3, h4 {
     position: relative;
     width: 280px;
     height: 323px;
-    margin: 8px; /* Зазор между сотами */
+    margin: 8px; /* Отступы между сотами */
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: var(--surface-2); 
     z-index: 1;
@@ -179,7 +179,7 @@ h1, h2, h3, h4 {
     filter: brightness(1.2) drop-shadow(0 10px 20px rgba(245, 183, 0, 0.4));
 }
 
-/* Внутренности (картинка и текст) */
+/* Картинка */
 .comb-item__inner { 
     width: 100%; 
     height: 100%; 
@@ -200,7 +200,7 @@ h1, h2, h3, h4 {
     transform: scale(1.1); 
 }
 
-/* Текст (градиент по центру) */
+/* Текст */
 .comb-item__info {
     position: absolute; 
     inset: 0;
@@ -229,16 +229,16 @@ h1, h2, h3, h4 {
     text-shadow: 0 2px 4px #000; 
 }
 
-/* --- МАГИЯ ШАХМАТНОГО ПОРЯДКА (ПК) --- */
+/* --- ВОТ ТА САМАЯ МАГИЯ --- */
 @media (min-width: 900px) {
-    /* Сдвигаем вниз КАЖДУЮ ВТОРУЮ соту (центральную колонку) */
+    /* Сдвигаем вниз каждую центральную соту */
     .comb-item:nth-child(3n+2) {
         transform: translateY(50%);
-        margin-bottom: 169px; /* Подтягиваем следующий ряд, чтобы соты сцепились */
+        margin-bottom: 169px; /* Подтягиваем следующий ряд наверх */
     }
 }
 
-/* --- МОБИЛКИ И ПЛАНШЕТЫ (БЕЗ СДВИГОВ) --- */
+/* Мобилки */
 @media (max-width: 899px) {
     .honeycomb-grid { 
         max-width: 620px; 
