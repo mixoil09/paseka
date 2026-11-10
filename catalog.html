@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина — Пасека</title>
+    <title>Каталог — Пасека</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
@@ -40,31 +40,30 @@
     });
     </script>
 </header>
-<section class="catalog-page">
-    <h1>Каталог</h1>
-    <nav class="categories">
-        <a href="/catalog.php" class="<?= $categoryId === null ? 'active' : '' ?>">Все</a>
-        <?php foreach ($categories as $cat): ?>
-            <a href="/catalog.php?category=<?= (int)$cat['id'] ?>" class="<?= $categoryId === (int)$cat['id'] ? 'active' : '' ?>"><?= htmlspecialchars($cat['name']) ?></a>
-        <?php endforeach; ?>
-    </nav>
-    <div class="honeycomb-grid">
-        <?php foreach ($products as $p): ?>
-            <a href="/product.php?id=<?= (int)$p['id'] ?>" class="comb-item">
-                <div class="comb-item__inner">
-                    <img src="/img/<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>">
-                    <div class="comb-item__info">
-                        <h3><?= htmlspecialchars($p['name']) ?></h3>
-                        <p class="price"><?= number_format((float)$p['price'], 0, '.', ' ') ?> ₽</p>
-                    </div>
-                </div>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
+
+<main class="container">
+    <section class="catalog-page">
+        <h1>Каталог</h1>
+        
+        <!-- Кнопки категорий (статические ссылки) -->
+        <nav class="categories">
+            <a href="catalog.html" id="cat-all">Все</a>
+            <a href="catalog.html?category=1" id="cat-1">Мёд</a>
+            <a href="catalog.html?category=2" id="cat-2">Свечи и воск</a>
+            <a href="catalog.html?category=3" id="cat-3">Подарочные наборы</a>
+        </nav>
+        
+        <!-- Сюда JavaScript будет вставлять карточки товаров -->
+        <div class="honeycomb-grid" id="catalog-grid"></div>
+    </section>
+</main>
+
 <footer class="site-footer">
     © 2026 Пасека. Все права защищены.
 </footer>
 
-<!-- Относительные пути к скриптам -->
 <script src="js/main.js"></script>
+<!-- Подключаем скрипт для каталога -->
+<script src="js/catalog.js"></script>
+</body>
+</html>
