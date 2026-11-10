@@ -149,13 +149,19 @@ h1, h2, h3, h4 {
 }
 
 /* Сетка-соты */
+/* ============================================
+   СЕТКА-СОТЫ (КАТАЛОГ)
+   ============================================ */
 .honeycomb-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 940px; /* Ширина ровно под 3 колонки */
+    /* Жестко задаем ширину, чтобы влезло РОВНО 3 колонки */
+    max-width: 920px; 
     margin: 0 auto;
     padding: 60px 0;
+    /* Используем gap вместо margin для ровных отступов */
+    gap: 20px; 
 }
 
 .comb-item {
@@ -163,55 +169,51 @@ h1, h2, h3, h4 {
     position: relative;
     width: 280px;
     height: 323px;
-    margin: 10px; 
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: var(--surface-2); 
     z-index: 1;
-    border: 4px solid var(--bg); /* Темная окантовка */
+    /* Убрали border, чтобы он не ломал математику сетки */
 }
-
-
 
 .comb-item:hover {
     transform: scale(1.05);
     z-index: 10;
-    filter: brightness(1.1) drop-shadow(0 10px 20px rgba(245, 183, 0, 0.4));
+    filter: brightness(1.2) drop-shadow(0 10px 20px rgba(245, 183, 0, 0.4));
 }
 
-.comb-item__inner { width: 100%; height: 100%; position: relative; overflow: hidden; }
-.comb-item__inner img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.comb-item:hover .comb-item__inner img { transform: scale(1.1); }
-
-.comb-item__info {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(13, 8, 5, 0.95) 0%, rgba(13, 8, 5, 0.5) 50%, transparent 100%);
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    padding: 20px 15px 40px; text-align: center;
-}
-.comb-item__info h3 { color: var(--primary-hover); font-size: 1.05rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px #000; }
-.comb-item__info .price { color: #fff; font-weight: 800; font-size: 1.15rem; text-shadow: 0 2px 4px #000; }
-
-/* МАГИЯ: Шахматный порядок для ПК */
+/* --- МАГИЯ ШАХМАТНОГО ПОРЯДКА (ПК) --- */
 @media (min-width: 900px) {
-    .comb-item:nth-child(3n+2) {
-        transform: translateY(50%);
-        margin-bottom: 169px;
+    .honeycomb-grid {
+        /* Оставляем место для сдвинутого нижнего ряда */
+        padding-bottom: 200px; 
     }
-}
-/* МАГИЯ: Сдвигаем центральную соту вниз */
-@media (min-width: 900px) {
+
+    /* Сдвигаем вниз 2-й, 5-й, 8-й элементы */
     .comb-item:nth-child(3n+2) {
-        margin-top: 170px;
-        margin-bottom: -150px; 
+        /* Толкаем соту вниз ровно на половину высоты (323 / 2) */
+        margin-top: 161px;
+        /* Подтягиваем следующий ряд наверх, чтобы соты сцепились */
+        margin-bottom: -161px; 
     }
 }
 
-/* Мобилки (без сдвигов) */
+/* --- МОБИЛКИ И ПЛАНШЕТЫ (Без сдвигов) --- */
 @media (max-width: 899px) {
-    .honeycomb-grid { max-width: 620px; }
+    .honeycomb-grid { 
+        max-width: 620px; 
+        gap: 15px;
+    }
+    /* На телефонах отключаем наложение */
     .comb-item:nth-child(3n+2) {
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 599px) {
+    .comb-item { 
+        width: 220px; 
+        height: 254px; 
     }
 }
 
