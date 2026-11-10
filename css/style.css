@@ -250,22 +250,47 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+/* Контейнер для картинки */
 .product-visual {
     width: 350px;
     height: 400px;
     flex-shrink: 0;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    border: 2px solid rgba(245, 183, 0, 0.3);
+    position: relative;
+    /* Убрали скругление и рамку */
 }
 
+/* ЗОЛОТАЯ РАМКА-СОТА (рисуется сзади картинки) */
+.product-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Золотой градиент */
+    background: linear-gradient(135deg, #ffd24a, #f5b700, #c78e00);
+    /* Форма шестиугольника */
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 1;
+    /* Тень и свечение */
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.8));
+    transition: filter 0.3s ease;
+}
+
+.product-visual:hover::before {
+    filter: drop-shadow(0 0 30px rgba(245, 183, 0, 0.6));
+}
+
+/* САМА КАРТИНКА (лежит внутри рамки) */
 .product-visual__img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    /* inset: 8px делает отступ от краев, создавая толщину золотой рамки */
+    inset: 8px; 
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
     object-fit: cover;
+    /* Вырезаем такую же форму шестиугольника */
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 2;
+    background: #1a120a;
 }
-
 .product-details {
     flex-grow: 1;
     max-width: 400px;
