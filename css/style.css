@@ -159,17 +159,16 @@ h1, h2, h3, h4 {
     flex-direction: column;
     align-items: center;
     padding: 60px 0;
-    /* Даем место для 4 сот в ряд (280*4 + отступы) */
     max-width: 1200px; 
     margin: 0 auto;
 }
 
-/* Ряд */
+/* Ряд с сотами (принудительно в строку) */
 .hive-row {
-    display: flex;
+    display: flex !important; 
+    flex-direction: row !important; 
     justify-content: center;
-    /* Отрицательный отступ, чтобы нижний ряд залез под верхний на 1/4 высоты */
-    margin-bottom: -80px; 
+    margin-bottom: -80px; /* Сцепка по вертикали */
 }
 
 /* Последний ряд не должен притягивать пустоту */
@@ -177,10 +176,9 @@ h1, h2, h3, h4 {
     margin-bottom: 0;
 }
 
-/* Сдвиг для нижнего ряда (3 шт) */
+/* Сдвиг для нижнего ряда */
 .hive-row--offset {
-    /* Сдвигаем вправо ровно на половину соты (280 / 2 = 140, с учетом наложения = 125) */
-    margin-left: 125px; 
+    margin-left: 125px; /* Сдвиг ровно на половину ширины */
 }
 
 /* Сама сота */
@@ -189,8 +187,8 @@ h1, h2, h3, h4 {
     position: relative;
     width: 280px;
     height: 323px;
-    /* Отрицательный отступ по бокам (по 15px), чтобы соты сцепились по горизонтали */
-    margin: 0 -15px; 
+    flex-shrink: 0; /* Запрещаем сжиматься */
+    margin: 0 -15px !important; /* Принудительно сцепляем по бокам */
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: var(--surface-2); 
     z-index: 1;
@@ -203,12 +201,12 @@ h1, h2, h3, h4 {
     filter: brightness(1.2) drop-shadow(0 10px 20px rgba(245, 183, 0, 0.4));
 }
 
-/* Внутренности (не меняются) */
+/* Внутренности */
 .comb-item__inner { width: 100%; height: 100%; position: relative; overflow: hidden; }
 .comb-item__inner img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
 .comb-item:hover .comb-item__inner img { transform: scale(1.1); }
 
-/* Текст (не меняется) */
+/* Текст */
 .comb-item__info {
     position: absolute; inset: 0;
     background: linear-gradient(to top, rgba(13, 8, 5, 0.95) 0%, rgba(13, 8, 5, 0.4) 50%, transparent 100%);
@@ -218,18 +216,18 @@ h1, h2, h3, h4 {
 .comb-item__info h3 { color: var(--primary-hover); font-size: 1.1rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px #000; }
 .comb-item__info .price { color: #fff; font-weight: 800; font-size: 1.15rem; text-shadow: 0 2px 4px #000; }
 
-/* --- МОБИЛКИ --- */
+/* --- МОБИЛКИ (на телефоне все встает в ровную колонку) --- */
 @media (max-width: 899px) {
     .hive-row {
         flex-wrap: wrap;
         gap: 10px;
-        margin-bottom: 10px; /* На телефонах отключаем налезание */
+        margin-bottom: 10px; 
     }
     .hive-row--offset {
-        margin-left: 0; /* Отключаем сдвиг */
+        margin-left: 0;
     }
     .comb-item {
-        margin: 0; /* Убираем отрицательный отступ */
+        margin: 0 !important; 
     }
 }
 
