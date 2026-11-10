@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина — Пасека</title>
+    <title>Товар — Пасека</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <!-- Относительный путь к CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="hive-theme">
@@ -41,31 +40,21 @@
     </script>
 </header>
 
-<section class="product-page">
-    <div class="product-layout">
-        <div class="product-visual">
-            <div class="product-visual__frame">
-                <img class="product-visual__img" src="/img/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
-            </div>
+<main class="container">
+    <!-- Сюда JS вставит карточку товара -->
+    <section class="product-page" id="product-page" style="background-image: url('img/honey-full-bg.jpg');">
+        <div class="product-layout" id="product-layout">
+            <p style="color: white;">Загрузка...</p>
         </div>
-        <div class="product-details">
-            <h1 class="product-details__title"><?= htmlspecialchars($product['name']) ?></h1>
-            <div class="product-details__price"><?= number_format((float)$product['price'], 0, '.', ' ') ?> ₽</div>
-            <div class="product-details__desc">
-                <p><?= nl2br(htmlspecialchars($product['description'])) ?></p>
-                <?php if ($product['weight']): ?><p class="product-details__weight">Вес: <?= htmlspecialchars($product['weight']) ?></p><?php endif; ?>
-            </div>
-            <button class="btn-add btn-add--large" onclick="addToCart(<?= (int)$product['id'] ?>, '<?= htmlspecialchars($product['name']) ?>', <?= (float)$product['price'] ?>)">Добавить в корзину</button>
-            <a href="/catalog.php" class="back-link">← Вернуться в каталог</a>
-        </div>
-    </div>
-</section>
+    </section>
+</main>
+
 <footer class="site-footer">
     © 2026 Пасека. Все права защищены.
 </footer>
 
-<!-- Относительные пути к скриптам -->
 <script src="js/main.js"></script>
-<!-- Скрипт hive.js здесь не нужен, так как видео-интро есть только на главной -->
+<!-- Скрипт для отрисовки товара (создай файл js/product.js) -->
+<script src="js/product.js"></script>
 </body>
 </html>
