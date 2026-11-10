@@ -1,76 +1,409 @@
+/* ============================================
+   RESET & BASE (СБРОС СТИЛЕЙ)
+   ============================================ */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { min-height: 100vh; overflow-x: hidden; font-family: 'Inter', system-ui, sans-serif; color: #fff; background: #0d0805; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-img { display: block; max-width: 100%; } a { color: inherit; text-decoration: none; } button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; } input, textarea { font: inherit; }
-:root { --bg: #0d0805; --surface: #1a120a; --surface-2: #2a1c10; --primary: #f5b700; --primary-hover: #ffd24a; --text: #ffffff; --text-muted: #b8a684; --border: rgba(245, 183, 0, 0.2); --radius-full: 999px; --container: 1160px; }
-h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary-hover); }
-.container { max-width: var(--container); margin: 0 auto; padding: 24px 20px; }
+body { min-height: 100vh; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea { font: inherit; }
 
-/* Header */
-.site-header { position: sticky; top: 0; z-index: 100; background: rgba(13, 8, 5, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-.logo { font-family: 'Montserrat', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--text); }
-.site-nav { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
-.site-nav a { padding: 8px 14px; border-radius: var(--radius-full); font-weight: 500; font-size: 0.95rem; color: var(--text-muted); transition: all 0.2s; }
-.site-nav a:hover { color: var(--primary); }
-#cart-count { display: inline-block; min-width: 20px; padding: 2px 6px; background: var(--primary); color: var(--bg); border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700; text-align: center; margin-left: 4px; }
+/* ============================================
+   ПЕРЕМЕННЫЕ (ТЕМНАЯ ТЕМА)
+   ============================================ */
+:root {
+  --bg: #0d0805;          
+  --surface: #1a120a;     
+  --surface-2: #2a1c10;
+  --primary: #f5b700;     
+  --primary-hover: #ffd24a;
+  --text: #ffffff;           
+  --text-muted: #b8a684;  
+  --border: rgba(245, 183, 0, 0.2); 
+  --radius-full: 999px;
+  --container: 1160px;
+}
 
-/* Footer */
-.site-footer { padding: 40px 24px 32px; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); background: var(--bg); margin-top: 40px; }
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
 
-/* Каталог (Соты) */
-.catalog-page { padding: 60px 20px 80px; } .catalog-page h1 { text-align: center; margin-bottom: 32px; font-size: 2.5rem; }
-.categories { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 48px; }
-.categories a { padding: 8px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-full); font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: all 0.2s; }
-.categories a:hover, .categories a.active { background: var(--primary); border-color: var(--primary); color: var(--bg); font-weight: 700; }
+h1, h2, h3, h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--primary-hover);
+}
 
-.honeycomb-grid { display: flex; flex-wrap: wrap; justify-content: center; max-width: 940px; margin: 0 auto; padding: 60px 0; }
-.comb-item { display: block; position: relative; width: 280px; height: 323px; margin: 8px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); transition: transform 0.3s, filter 0.3s; background: var(--surface-2); z-index: 1; border: 3px solid var(--bg); }
-.comb-item:hover { transform: scale(1.05) !important; z-index: 10; filter: brightness(1.1) drop-shadow(0 10px 20px rgba(245, 183, 0, 0.4)); }
+.container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+/* ============================================
+   HEADER (ШАПКА)
+   ============================================ */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13, 8, 5, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.site-nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.site-nav a {
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.site-nav a:hover {
+    color: var(--primary);
+}
+
+#cart-count {
+    display: inline-block;
+    min-width: 20px;
+    padding: 2px 6px;
+    background: var(--primary);
+    color: var(--bg);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-left: 4px;
+}
+
+/* ============================================
+   FOOTER (ПОДВАЛ)
+   ============================================ */
+.site-footer {
+    padding: 40px 24px 32px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    margin-top: 40px;
+}
+
+/* ============================================
+   КАТАЛОГ (СОТЫ)
+   ============================================ */
+.catalog-page { padding: 60px 20px 80px; }
+.catalog-page h1 { text-align: center; margin-bottom: 32px; font-size: 2.5rem; }
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 48px;
+}
+
+.categories a {
+    padding: 8px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.categories a:hover, .categories a.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--bg);
+    font-weight: 700;
+}
+
+/* Сетка-соты */
+.honeycomb-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 940px; /* Ширина под 3 колонки */
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.comb-item {
+    display: block;
+    position: relative;
+    width: 280px;
+    height: 323px;
+    margin: 8px; 
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    transition: transform 0.3s, filter 0.3s;
+    background: var(--surface-2); 
+    z-index: 1;
+    border: 3px solid var(--bg); 
+}
+
+.comb-item:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    filter: brightness(1.1) drop-shadow(0 10px 20px rgba(245, 183, 0, 0.4));
+}
+
 .comb-item__inner { width: 100%; height: 100%; position: relative; overflow: hidden; }
 .comb-item__inner img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
 .comb-item:hover .comb-item__inner img { transform: scale(1.1); }
-.comb-item__info { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 8, 5, 0.95) 0%, rgba(13, 8, 5, 0.4) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px 15px 40px; text-align: center; }
+
+.comb-item__info {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13, 8, 5, 0.95) 0%, rgba(13, 8, 5, 0.5) 50%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 20px 15px 40px; text-align: center;
+}
 .comb-item__info h3 { color: var(--primary-hover); font-size: 1.05rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px #000; }
 .comb-item__info .price { color: #fff; font-weight: 800; font-size: 1.15rem; text-shadow: 0 2px 4px #000; }
 
-@media (min-width: 900px) { .comb-item:nth-child(3n+2) { transform: translateY(50%); margin-bottom: 169px; } }
-@media (min-width: 600px) and (max-width: 899px) { .honeycomb-grid { max-width: 620px; } .comb-item:nth-child(2n) { transform: translateY(50%); margin-bottom: 169px; } }
-@media (max-width: 599px) { .honeycomb-grid { max-width: 100%; gap: 10px; padding: 20px 0; } .comb-item { width: 200px; height: 231px; transform: none !important; margin-bottom: 0 !important; } }
+/* МАГИЯ: Шахматный порядок для ПК */
+@media (min-width: 900px) {
+    .comb-item:nth-child(3n+2) {
+        transform: translateY(50%);
+        margin-bottom: 169px;
+    }
+}
+/* Планшеты (2 колонки) */
+@media (max-width: 899px) {
+    .honeycomb-grid { max-width: 620px; padding: 20px 0; }
+    .comb-item:nth-child(2n) { transform: translateY(50%); margin-bottom: 169px; }
+}
+/* Телефоны (1 колонка) */
+@media (max-width: 599px) {
+    .honeycomb-grid { max-width: 100%; gap: 10px; }
+    .comb-item { width: 200px; height: 231px; transform: none !important; margin-bottom: 0 !important; }
+}
 
-/* Страница товара */
-.product-page { background-image: url('/img/honey-full-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; background-color: #0d0805; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; width: 100%; }
-.product-layout { display: flex; gap: 60px; align-items: center; justify-content: center; max-width: 900px; margin: 0 auto; width: 100%; }
-.product-visual { width: 400px; height: 460px; flex-shrink: 0; position: relative; }
-.product-visual__frame { width: 100%; height: 100%; background: linear-gradient(135deg, #ffd24a, #f5b700, #c78e00); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); padding: 8px; box-sizing: border-box; }
-.product-visual__img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background: #1a120a; display: block; }
-.product-details { flex-grow: 1; max-width: 400px; background: rgba(13, 8, 5, 0.7); padding: 30px; border-radius: 20px; backdrop-filter: blur(8px); border: 1px solid var(--border); }
+/* ============================================
+   СТРАНИЦА ТОВАРА (С ФОНОМ-РАМКОЙ)
+   ============================================ */
+.product-page {
+    /* Твоя картинка с рамкой */
+    background-image: url('../img/honey-full-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0d0805; 
+    
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.product-layout {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px; 
+    margin: 0 auto;
+    width: 100%;
+}
+
+.product-visual {
+    width: 350px;
+    height: 400px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(245, 183, 0, 0.3);
+}
+
+.product-visual__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-details {
+    flex-grow: 1;
+    max-width: 400px;
+    background: rgba(13, 8, 5, 0.7); 
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+}
+
 .product-details__title { font-size: 2.2rem; color: var(--primary-hover); margin-bottom: 10px; }
 .product-details__price { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 20px; }
 .product-details__desc { font-size: 1rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
-.btn-add { background: var(--primary); color: var(--bg); padding: 12px 24px; border-radius: var(--radius-full); font-weight: 700; font-size: 1rem; transition: background 0.2s; width: 100%; }
+
+.btn-add {
+    background: var(--primary);
+    color: var(--bg);
+    padding: 12px 24px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 1rem;
+    transition: background 0.2s;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
 .btn-add:hover { background: var(--primary-hover); }
 .btn-add--large { display: inline-block; padding: 16px 44px; font-size: 1.1rem; width: auto; margin-bottom: 20px; }
 .back-link { display: block; color: var(--text-muted); text-decoration: underline; font-size: 0.95rem; }
 .back-link:hover { color: var(--primary); }
 
-/* Корзина */
-.cart-page { padding: 60px 20px 80px; max-width: 900px; margin: 0 auto; } .cart-page h1 { margin-bottom: 32px; text-align: center; }
-.cart-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 40px; }
-.cart-table th, .cart-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text); }
-.cart-table thead { background: var(--surface-2); } .cart-table th { font-weight: 600; color: var(--primary-hover); }
-.cart-table .right { text-align: right; } .cart-table tfoot td { font-weight: 700; font-size: 1.1rem; }
+@media (max-width: 768px) {
+    .product-layout { flex-direction: column; gap: 20px; }
+    .product-visual { width: 280px; height: 320px; }
+    .product-details { text-align: center; padding: 20px; }
+}
+
+/* ============================================
+   КОРЗИНА И ФОРМЫ
+   ============================================ */
+.cart-page { padding: 60px 20px 80px; max-width: 900px; margin: 0 auto; }
+.cart-page h1 { margin-bottom: 32px; text-align: center; }
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 40px;
+}
+
+.cart-table th, .cart-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+.cart-table thead { background: var(--surface-2); }
+.cart-table th { font-weight: 600; color: var(--primary-hover); }
+.cart-table .right { text-align: right; }
+.cart-table tfoot td { font-weight: 700; font-size: 1.1rem; }
+
 .cart-qty { display: inline-flex; align-items: center; gap: 6px; }
-.cart-qty button { width: 32px; height: 32px; border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; font-weight: 700; color: var(--text); transition: all 0.2s; }
+.cart-qty button {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 8px;
+    font-weight: 700; color: var(--text);
+    transition: all 0.2s;
+}
 .cart-qty button:hover { border-color: var(--primary); color: var(--primary); }
-.cart-qty input { width: 50px; padding: 6px; border: 1px solid var(--border); background: var(--bg); border-radius: 8px; text-align: center; font-weight: 600; color: var(--text); }
-.remove-btn { color: #ff6b6b; font-weight: 500; padding: 6px 12px; cursor: pointer; } .remove-btn:hover { text-decoration: underline; }
+.cart-qty input {
+    width: 50px; padding: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.remove-btn { color: #ff6b6b; font-weight: 500; padding: 6px 12px; cursor: pointer; border: none; background: none; }
+.remove-btn:hover { text-decoration: underline; }
 
 /* Формы */
-.order-form { background: var(--surface); padding: 32px; border-radius: 14px; border: 1px solid var(--border); display: grid; gap: 20px; max-width: 600px; }
-.order-form label { display: flex; flex-direction: column; gap: 8px; font-weight: 500; color: var(--primary-hover); }
-.order-form input, .order-form textarea { padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 1rem; }
-.order-form input:focus, .order-form textarea:focus { outline: none; border-color: var(--primary); }
-.order-form button[type="submit"] { justify-self: start; padding: 14px 32px; background: var(--primary); color: var(--bg); font-weight: 700; border-radius: var(--radius-full); transition: all 0.2s; }
+.order-form {
+    background: var(--surface);
+    padding: 32px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    display: grid;
+    gap: 20px;
+    max-width: 600px;
+}
+
+.order-form label {
+    display: flex; flex-direction: column; gap: 8px;
+    font-weight: 500; color: var(--primary-hover);
+}
+
+.order-form input, .order-form textarea {
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.order-form input:focus, .order-form textarea:focus {
+    outline: none; border-color: var(--primary);
+}
+
+.order-form button[type="submit"] {
+    justify-self: start;
+    padding: 14px 32px;
+    background: var(--primary);
+    color: var(--bg);
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
 .order-form button[type="submit"]:hover:not(:disabled) { background: var(--primary-hover); }
-#order-message { font-weight: 600; margin-top: 8px; } #order-message.success { color: #4ade80; } #order-message.error { color: #ff6b6b; }
+
+#order-message { font-weight: 600; margin-top: 8px; }
+#order-message.success { color: #4ade80; }
+#order-message.error { color: #ff6b6b; }
+
 .hidden { display: none !important; }
+
+/* ============================================
+   СТРАНИЦА "О ПАСЕКЕ" И АВТОРИЗАЦИЯ
+   ============================================ */
+.section { padding: 60px 20px; max-width: 800px; margin: 0 auto; }
+.section h1 { text-align: center; margin-bottom: 32px; font-size: 2.5rem; }
+.section p { color: var(--text-muted); margin-bottom: 20px; font-size: 1.1rem; }
+.section ul { color: var(--text-muted); margin-left: 20px; font-size: 1.1rem; }
+.section li { margin-bottom: 10px; }
+
+/* ============================================
+   МОБИЛКА (ОБЩИЕ ФИКСЫ)
+   ============================================ */
+@media (max-width: 768px) {
+    .site-header { padding: 12px 16px; }
+    .site-nav a { padding: 6px 10px; font-size: 0.85rem; }
+    .cart-table th, .cart-table td { padding: 10px 8px; font-size: 0.85rem; }
+    .order-form { padding: 24px 20px; }
+}
